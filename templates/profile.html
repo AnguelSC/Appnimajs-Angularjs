@@ -1,0 +1,36 @@
+<header class="bck light">
+    <h3 class="on-left text thin"></h3>
+    <nav class="on-right" ng-class="{true: 'none'}[isUser]">
+        <button class="secondary" ng-show="check" ng-click="unfollow()">Siguiendo</button>
+        <button ng-hide="check" ng-click="follow()">Seguir</button>
+    </nav>
+</header>
+<section class="padding bck color" ng-controller="profileCtrl">
+    <div class="row ">
+        <div class="column_3 padding">
+            <img src="{{user.avatar}}" class=" responsive rounded" data-tip="Hello world!">
+        </div>
+        <div class="column_9 color white">
+            <h1 class="text bold color theme margin-top">{{user.username}}</h1>
+            <h3 class="text normal italic margin-bottom">{{user.name}}</h3>
+            <h4 class="text justify margin-bottom">{{user.mail}}{{user.id}}</h4>
+            <div class="row text bold hide-phone">
+                <div class="column_3 text big">
+                    <a href="#" class="margin-right icon twitter"></a>
+                    <a href="#" class="margin-right icon facebook"></a>
+                    <a href="#" class="icon linkedin"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bck dark">
+    <div class="row text center">
+        <nav data-tuktuk="menu" class="column_12 padding text bold">
+            <a href="#" class="active"><span class="icon user"></span>Shots<small>(100)</small></a>
+            <a href="#"><span class="icon heart"></span>Trending<small>(3)</small></a>
+            <a href="#"><span class="icon group"></span>Following<small>(192)</small></a>
+            <a href="#"><span class="icon star"></span>Debuts<small>(160)</small></a>
+        </nav>
+    </div>
+</section>

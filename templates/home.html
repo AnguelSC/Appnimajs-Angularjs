@@ -1,0 +1,63 @@
+<article class="padding scroll">
+    {{ message }}
+    <!--<ul id="data_user">
+    </ul>
+    Registro
+    <form id="signup">
+        <input type="email" id="signup_email" value="" placeholder="email">
+        <input type="password" id="signup_password" value="" placeholder="password">
+        <input type="submit" class="button" name="" value="register">
+    </form>
+    Suscripcion
+    <form id="subscribe">
+        <input type="email" id="subscribe_email" value="" placeholder="email">
+        <input type="submit" class="button" name="" value="suscribirse">
+    </form>
+    Mensajes Privados
+    <form id="message">
+        <input type="text" id="message_user" value="" placeholder="message_user">
+        <input type="text" id="message_asunto" value="" placeholder="message_asunto">
+        <textarea id="message_message" placeholder="message_message"></textarea>
+        <input type="submit" class="button" name="" value="Mensaje">
+    </form>
+    <ul id="imbox">
+    </ul>
+    Mensajes Privados
+    <form ng-controller="imboxCtrl">
+        <input type="text" ng-model="user" value="" placeholder="message_user">
+        <textarea ng-model="message" placeholder="message_message"></textarea>
+        <input type="submit" class="button" ng-click="send()" name="" value="Mensaje">
+    </form>
+    <div class="column_12 radius bck color text color white padding-top padding-bottom">
+        <lu>
+            <li ng-repeat="imbox in imboxs">
+            </li>
+        </lu>
+    </div>
+-->
+    Chat
+    <div ng-controller="chatCtrl">
+        <form>
+            <input type="text" ng-model="msg" ng-keydown="addMessage($event)" placeholder="Message...">
+        </form>
+        <div class="column_11 radius bck color text color padding">
+            <div ng-repeat="msg in messages">
+                <!--<a href="" style="background-image:url({{msg.user.avatar}});" title=""></a>-->
+                <em>{{msg.user.mail}}</em>: {{msg.body}}
+                <a href="button" title="" ng-model="toRemove"><span class="on-right tag bck theme">delete</span></a>
+            </div>
+        </div>   
+    </div>
+    Seguir
+    <div ng-controller="followCtrl">
+        <form ng-submit="follow()">
+            <input type="text" id="follow_user" ng-model="todoText" placeholder="follow_user">
+            <input type="submit" class="button" name="" value="Seguir">
+        </form>
+        <ul id="following">
+            <li ng-repeat="data in following">{{data.username}}</li>
+        </ul>
+        <ol id="followers">
+        </ol>
+    </div>   
+</article>

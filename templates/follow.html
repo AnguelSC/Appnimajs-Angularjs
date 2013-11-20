@@ -1,0 +1,35 @@
+<header class="bck light">
+    <h3 class="on-left text thin">Amigos</h3>
+
+</header>
+<div class="margin-bottom margin-top margin-right">
+    <h4 class="text book inline"><span class="icon group color theme"></span> Seguidores <small>( {{followers.length}} )</small></h4>
+    <!--<nav class="inline on-right">
+        <a href="#" class="button secondary small"><span class="icon search"></span>Search</a>
+    </nav>-->
+</div>
+<section class="padding">
+    <div class="inline">
+        <a href="#/user/{{follow.username}}" ng-repeat="follow in followers">
+            <div class="column_2 thumb bck light" style="background-image: url({{follow.avatar}}); background-size: cover;">
+                <div href="" class="minif extra text bold">
+                    {{follow.username}}
+                </div>
+            </div>
+        </a>
+    </div>
+</section>
+<div class="margin-bottom margin-top margin-right">
+    <h4 class="text book inline"><span class="icon group color theme"></span> Siguiendo <small>( {{following.length}} )</small></h4>
+</div>
+<section class="padding">
+    <div class="inline">
+        <a href="#/user/{{follow.username}}" ng-repeat="follow in following">
+            <div class="column_2 thumb bck light" style="background-image: url({{follow.avatar}}); background-size: cover;">
+                <div href="" class="minif extra text bold">
+                    {{follow.username}}
+                </div>
+            </div>
+        </a>
+    </div>
+</section>
