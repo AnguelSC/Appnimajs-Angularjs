@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Untitled</title>
+         <link rel="stylesheet" href="css/tuktuk.css">
+        <link rel="stylesheet" href="css/tuktuk.theme.css">
+        <link rel="stylesheet" href="css/tuktuk.icons.css">
+    </head>
+    <body>
+    <script src="//code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>   
+    <script src="angular.min.js" ></script>
+    <script src="route.js" ></script>
+    <script src="tuktuk.js" ></script>
+    <script src="appnima.js" ></script>
+    <script>
+         Appnima.key = "NTI4OGM0YjliYjllNjdmMzVjMDAwMDM4Okg1QnVBb09JcEJhNEtuMjZ3ekdsaGpkakxKQW9rV2c=";
+    if (Appnima.User.session()!== null) {
+    var data= {
+        access_token: Appnima.User.session().access_token,
+        refresh_token: Appnima.User.session().refresh_token,
+        id: Appnima.User.session().id,
+    }
+    localStorage.setItem(Appnima.key,JSON.stringify(data));
+    }else{
+       
+    }
+   /* console.log(Appnima.User.info({avatar:"https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-ash3/625542_10202314595653307_1663073360_n.jpg"}));
+ */
+    </script>
+
+    </body>
+</html>
