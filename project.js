@@ -1,3 +1,15 @@
+
+function NewDate(timestamp) {
+    var date = (timestamp) ? new Date(timestamp) : new Date(),
+        hours = date.getHours() || 12,
+        minutes = '' + date.getMinutes(),
+        ampm = (date.getHours() >= 12) ? 'pm' : 'am'; 
+
+    hours = (hours > 12) ? hours - 12 : hours;
+    minutes = (minutes.length < 2) ? '0' + minutes : minutes;
+    return '' + hours + ':' + minutes + ampm;
+  };
+
 var APP = angular.module('app', ['service','firebase']);
 APP.config(['$routeProvider', function($routeProvider) {
   $routeProvider
@@ -14,9 +26,8 @@ APP.config(['$routeProvider', function($routeProvider) {
     controller:'profileCtrl'
   })
   .otherwise({
-        redirectTo: '/'
-      });
-
+    redirectTo: '/'
+  });
 }]);
 //follow
 APP.controller('followCtrl', ['$scope', 'user', function($scope, user) {
@@ -25,6 +36,7 @@ APP.controller('followCtrl', ['$scope', 'user', function($scope, user) {
         $scope.following = response;
       });
      });
+
     user.followers(function(response) {
       $scope.$apply(function() {
         $scope.followers = response;
@@ -32,43 +44,45 @@ APP.controller('followCtrl', ['$scope', 'user', function($scope, user) {
     });
 }]);
 //profile
-APP.controller('profileCtrl', ['$scope', '$routeParams','user', function($scope, $routeParams, user) {
-
-    var b = $routeParams.userId;
-    user.infuser(b,function(response) {
-      $scope.$apply(function() {
-        $scope.user = response[0];
-      });
-      user.check(response[0].id,function(result) {
-        $scope.$apply(function() {
-          $scope.check = result.following;
-        });
-      }); 
-      if (Appnima.User.session().id == response[0].id) {
-        $scope.$apply(function() {
-          $scope.isUser = true;
-        });
-      };
+APP.controller('profileCtrl', ['$scope', '$routeParams', 'user', function($scope, $routeParams, user) {
+  var b = $routeParams.userId;
+  user.infuser(b,function(response) {
+    $scope.$apply(function() {
+      $scope.user = response[0];
     });
-    $scope.follow = function(){
-      user.follow($scope.user.id,function(response) {
-        if (response.status = "Ok") {
-          $scope.$apply(function() {
-            $scope.check = !$scope.check;
-          });
-        }
+    user.check(response[0].id,function(result) {
+      $scope.$apply(function() {
+        $scope.check = result.following;
       });
-    }
-    $scope.unfollow = function(){
-      user.unfollow($scope.user.id,function(response) {
-        if (response.status = "Ok") {
-          $scope.$apply(function() {
-            $scope.check = !$scope.check;
-          });
-        }
+    }); 
+    if (Appnima.User.session().id == response[0].id) {
+      $scope.$apply(function() {
+        $scope.isUser = true;
       });
-    }
-
+    };
+  });
+  $scope.follow = function(){
+    user.follow($scope.user.id,function(response) {
+      if (response.status = "Ok") {
+        $scope.$apply(function() {
+          $scope.check = !$scope.check;
+          var cont = $('#count_following').text(),r = parseInt(cont)+1;
+          $('#count_following').text(r);
+        });
+      }
+    });
+  }
+  $scope.unfollow = function(){
+    user.unfollow($scope.user.id,function(response) {
+      if (response.status = "Ok") {
+        $scope.$apply(function() {
+          $scope.check = !$scope.check;
+          var cont = $('#count_following').text(),r = parseInt(cont)-1;
+          $('#count_following').text(r);
+        });
+      }
+    });
+  }
 }]);
 APP.controller('home', function($scope) {
   $scope.message = 'This is Add new order screen';
@@ -79,6 +93,7 @@ APP.controller('userCtrl', ['$scope', 'user', function($scope, user) {
     user.info(function(response) {
     $scope.$apply(function() {
       $scope.data = response[0];
+      console.log(response[0]);
       $('#update_nickname').val($scope.data.username);
       $('#update_name').val($scope.data.name);
       $('#update_bio').val($scope.data.bio);
@@ -89,7 +104,10 @@ APP.controller('userCtrl', ['$scope', 'user', function($scope, user) {
       TukTuk.Modal.show("edit-profile");
     });
    });
-  }
+  };
+  $scope.$on('changefollow', function(event, message) {
+      $scope.count_followers = message;
+  });    
   $scope.logout = function(){
     localStorage.clear();
     Appnima.User.logout();
@@ -121,13 +139,13 @@ APP.controller('updateCtrl', ['$scope', 'user', function($scope, user) {
   $scope.updateProfile = function(){
   
   var datos = {
-    username  : $scope.update_nickname,
-    name      : $scope.update_name,
-    bio       : $scope.update_bio,
+    username  : $('#update_nickname').val(),
+    name      : $('#update_name').val(),
+    bio       : $('#update_bio').val(),
     avatar    : $('#update_avatar').val(),
-    //address   : $scope.update_address,
-    //site      : $scope.update_site,
-    //twitter   : $scope.update_twitter
+    //address   : $('#update_address').val(),
+    //site      : $('#update_site').val(),
+    //twitter   : $('#update_twitter').val()
   };
   /*if (datos.avatar == null) {
     datos.avatar = "http://appnima.com/img/avatar.jpg";
@@ -137,23 +155,28 @@ APP.controller('updateCtrl', ['$scope', 'user', function($scope, user) {
  };
 }]);
 APP.controller('chatCtrl', ['$scope', 'user','angularFire', function($scope, user,angularFire) {
+  /*for (var i = 0; i < $scope.messages.length; i++) {
+    t = moment($scope.messages[i].date,"YYYY-MM-DD hh:mm:ss").fromNow();
+    console.log(t);
+    $(".moment").html(t);
+  }*/
+  
   var ref = new Firebase("https://anguelsc.firebaseio.com/");
   $scope.messages = [];
   angularFire(ref, $scope, "messages");
-  $scope.removeItem = function() {
-    $scope.items.splice($scope.toRemove, 1);
-    $scope.toRemove = null;
-  };
-  $scope.addMessage = function(e) {
-    if (e.keyCode != 13) return;
+  $scope.addMessage = function() {
+    var e = $scope.msg;
     user.info(function(response) {
       $scope.$apply(function() {
-        $scope.messages.push({user: response, body: $scope.msg});
+        var t;
+        $scope.messages.push({user: response[0], body: $scope.msg,date:NewDate()});
+
         $scope.msg = "";
       });
     });
   }
 }]);
+
 /*
 var imbox = new Appnima.Socket.Inbox();
 APP.controller('imboxCtrl', ['$scope', 'user', function($scope, user) {

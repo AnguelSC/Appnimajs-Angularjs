@@ -1,8 +1,8 @@
 var SERVICE = angular.module('service', []);
-
 SERVICE.factory('user', function() {
 
   return {
+    
     login:function(datos) {
       Appnima.User.login(datos.user,datos.password).then(function(error,result){
         if (error !== null) {

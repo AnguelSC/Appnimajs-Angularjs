@@ -35,8 +35,8 @@
             </div>
             <hr>
             <ul class="margin" data-tuktuk="totals">
-                <li><strong>{{count_followers}}</strong><small>Seguidores</small></li>
-                <li><strong>{{count_following}}</strong><small>Siguiendo</small></li>
+                <li><strong id="count_followers">{{count_followers}}</strong><small>Seguidores</small></li>
+                <li><strong id="count_following">{{count_following}}</strong><small>Siguiendo</small></li>
             </ul>
             <hr>
             <nav data-tuktuk="menu" class="text bold">
@@ -71,7 +71,7 @@
             <input type="text" id="update_nickname" ng-model="update_nickname" value="{{data.username}}" class="large bold" placeholder="Nickname">
             <br>
             <label>Name</label>
-            <input type="text" id="update_name" ng-model="update_name" value="{{data.name}}">
+            <input type="text" id="update_name" ng-model="update_name">
             <label>Bio</label>
             <textarea id="update_bio" ng-model="update_bio" value="{{data.bio}}"></textarea>
             <label>Avatar URL</label>
@@ -132,6 +132,7 @@
     <script src="route.js" ></script>
     <script src="tuktuk.js" ></script>
     <script src="appnima.js" ></script>
+    <script src="jquery.timeago.js"></script>
     <script src="socket.io.js" ></script><!--0.8.5-->
     <script type="text/javascript">
     Appnima.key = "NTI4OGM0YjliYjllNjdmMzVjMDAwMDM4Okg1QnVBb09JcEJhNEtuMjZ3ekdsaGpkakxKQW9rV2c=";
@@ -150,5 +151,11 @@
     <script src="home.js"></script>
     <script src="service.js"></script>
     <script src="project.js"></script>
+    <script type="text/javascript">
+     window.onload = carga;
+    function carga(){
+       $('.timeago').timeago(); 
+    };
+    </script>
     </body>
 </html>
